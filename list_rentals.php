@@ -26,8 +26,10 @@ try {
         echo "  <th>Start Time</th>
                     <th>End Time</th>
                     <th>Total Cost</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>Status</th>";
+        if ($is_admin) {
+            echo "<th>Actions</th>";
+        }";
                 </tr>";
 
     
@@ -49,18 +51,19 @@ try {
             echo "<td>" . date('Y-m-d H:i', strtotime($rental['rental_start'])) . "</td>
                   <td>$end_time</td>
                   <td>$total_cost</td>
-                  <td>$status</td>
-                  <td>";
-            
-            if (!$rental['rental_end']) {
-                echo "<a href='end_rental.php?id={$rental['id']}' class='button info'>End Rental</a>";
+                  <td>$status</td>";
+             if ($is_admin) {
+                echo "<td>";
+                if (!$rental['rental_end']) {
+                    echo "<a href='end_rental.php?id={$rental['id']}' class='button info'>End Rental</a> ";
+                }
+                echo "<a href='delete_rental.php?id={$rental['id']}' class='button danger' onclick='return confirm(\"Are you sure?\")'>Delete</a>";
+                echo "</td>";
             }
-            
-            echo "<a href='delete_rental.php?id={$rental['id']}' class='button danger' onclick='return confirm(\"Are you sure?\")'>Delete</a>
-                    </td>
-                </tr>";
+
+            echo "</tr>";
         }
-        
+
         echo "</table>";
     } else {
         echo "<p>No rentals found.</p>";
